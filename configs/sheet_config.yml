@@ -1,0 +1,57 @@
+sheets:
+  - sheet_id: "1QrNwskSESPwYGxo8TnUGzffxmpbJ7ScKUGtVJ9GB7_0"
+    range_name: "Danh sách"
+    credentials_path: "./configs/credentials.json"
+    index: 0
+    rsa_type: "add"
+    columns:
+      - name: stt
+        data_type: string
+        description: 'source'
+      - name: vehicle_owner_name
+        data_type: string
+        description: 'source'
+      - name: phone
+        data_type: string
+        description: 'source'
+      - name: address
+        data_type: string
+        description: 'source'
+      - name: license_plate
+        data_type: string
+        description: 'source'
+      - name: vehicle_brand
+        data_type: string
+        description: 'source'
+      - name: model_type
+        data_type: string
+        description: 'source'
+      - name: certificate_number
+        data_type: string
+        description: 'source'
+      - name: valid_from
+        data_type: string
+        description: 'source'
+      - name: valid_to
+        data_type: string
+        description: 'source'
+      - name: certificate_paper
+        data_type: string
+        description: 'source'  
+      - name: product_package
+        data_type: string
+        description: 'source'  
+      - name: rsa_type
+        data_type: string
+        description: 'rsa_type'  
+      - name: processing_date
+        data_type: string
+        description: 'processing_date'
+    iceberg_table: 
+      name: "add_lead"
+      warehouse: "lnd_tdc"
+      catalog_name: "lnd_tdc"
+      namespace: "ns_rsa"
+      primary_key: []
+      partition_by: []
+      order_by: []

@@ -1,0 +1,90 @@
+version: 2
+models:
+  - name: staging_prod_db_coredb_crm_owner_account
+    description: "Crm Owner Account"
+    # required
+    config:
+      contract:
+        enforced: true
+      run:
+        database: lnd_tdc
+        namespace: ns_gcp_clickhouse
+        mode: overwrite
+      key:
+        primary_key: ['account_id']
+        partition_by: ['processing_time']
+        order_by: ['account_id']
+
+    # model-level constraints
+    columns:
+      - name: source
+        data_type: string
+        description: 'source'
+
+      - name: status
+        data_type: string
+        description: 'status'
+
+      - name: balance
+        data_type: double
+        description: 'balance'
+
+      - name: cust_type
+        data_type: string
+        description: 'cust_type'
+
+      - name: account_id
+        data_type: long
+        description: 'account_id'
+
+      - name: last_modify
+        data_type: timestamp
+        description: 'last_modify'
+
+      - name: lock_balance
+        data_type: double
+        description: 'lock_balance'
+
+      - name: mig_cust_type
+        data_type: string
+        description: 'mig_cust_type'
+
+      - name: mig_object_id
+        data_type: string
+        description: 'mig_object_id'
+
+      - name: mig_wallet_id
+        data_type: string
+        description: 'mig_wallet_id'
+
+      - name: account_number
+        data_type: string
+        description: 'account_number'
+
+      - name: account_number_raw
+        data_type: string
+        description: 'account_number_raw'
+
+      - name: mig_object_type
+        data_type: string
+        description: 'mig_object_type'
+
+      - name: available_balance
+        data_type: double
+        description: 'available_balance'
+
+      - name: mig_object_status
+        data_type: string
+        description: 'mig_object_status'
+
+      - name: parent_account_id
+        data_type: long
+        description: 'parent_account_id'
+
+      - name: subscription_balance
+        data_type: double
+        description: 'subscription_balance'
+
+      - name: processing_time
+        data_type: timestamp
+        description: 'processing_time'

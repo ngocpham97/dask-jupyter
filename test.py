@@ -1,0 +1,2 @@
+a = len(["stt", "so_number", "order_type", "vehicle_owner_name", "address", "phone", "id_number", "vehicle_brand", "license_plate", "chassis_number", "engine_number", "product_package", "product_fee", "total_amount", "agent_code", "agent_name", "insurance_provider_name", "valid_from", "valid_to", "issue_date", "certificate_number", "insurance_provider_code", "sales_staff"])
+print(a)

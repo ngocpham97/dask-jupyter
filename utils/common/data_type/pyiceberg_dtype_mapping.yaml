@@ -1,0 +1,50 @@
+type:
+  - pyiceberg: BinaryType()
+    pyarrow: binary
+    pandas: object
+    description: Binary data type, typically used for blobs or byte arrays
+
+  - pyiceberg: BooleanType()
+    pyarrow: bool_
+    pandas: bool
+    description: Boolean data type, representing True or False values
+
+  - pyiceberg: DateType()
+    pyarrow: date32
+    pandas: datetime64[ns]
+    description: Represents calendar date (year, month, day)
+
+  - pyiceberg: DoubleType()
+    pyarrow: float64
+    pandas: float64
+    description: 64-bit floating point number
+
+  - pyiceberg: FloatType()
+    pyarrow: float32
+    pandas: float32
+    description: 32-bit floating point number
+
+  - pyiceberg: IntegerType()
+    pyarrow: int32
+    pandas: int32
+    description: 32-bit signed integer
+
+  - pyiceberg: LongType()
+    pyarrow: int64
+    pandas: int64
+    description: 64-bit signed integer
+
+  - pyiceberg: StringType()
+    pyarrow: string
+    pandas: string
+    description: UTF-8 encoded variable-length string
+
+  - pyiceberg: TimestampType()
+    pyarrow: timestamp[us]
+    pandas: datetime64[ns]
+    description: Naive timestamp (without timezone)
+
+  - pyiceberg: TimestamptzType()
+    pyarrow: timestamp[us, UTC]
+    pandas: datetime64[ns, UTC]
+    description: Timestamp with timezone (UTC)

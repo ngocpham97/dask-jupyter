@@ -1,0 +1,34 @@
+stages:
+  - build
+  - update-image
+
+variables:
+  REGISTRY_URL: registry-dpex.vetc.com.vn
+  IMAGE_TAG: "${REGISTRY_URL}/data/dask-jupyter:${CI_COMMIT_SHORT_SHA}"
+
+dockerize-dev:
+  stage: build
+  image: docker
+  script:
+    - docker build --platform linux/amd64 -t ${IMAGE_TAG} .
+    - docker push ${IMAGE_TAG}
+  only:
+    - main
+  tags:
+    - docker
+    - dpex
+
+update-image:
+  image:
+    name: alpine/curl:8.7.1
+  stage: update-image
+  script:
+    - |-
+      curl -X PATCH --user admin:${AIRFLOW_DPEX_PASSWORD} https://airflow-dpex.vetc.com.vn/api/v1/variables/DASK_JUPYTER_IMAGE \
+      -H 'Content-Type: application/json' \
+      -d '{"key": "DASK_JUPYTER_IMAGE", "description": "Dask Jupyter Image", "value": "'${IMAGE_TAG}'"}'
+  only:
+    - main
+  tags:
+    - docker
+    - dpex
