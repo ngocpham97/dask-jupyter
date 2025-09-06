@@ -12,3 +12,7 @@ __pycache__/
 
 .vscode/
 .idea/
+
+
+configs/credentials.json
+configs/credentials_old.json
