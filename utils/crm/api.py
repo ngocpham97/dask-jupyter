@@ -46,6 +46,17 @@ def get_crm_token(auth_url, client_id, client_secret, headers=None):
     response.raise_for_status()
     return response.json().get("access_token")
 
+def normalize_payload(data: dict) -> dict:
+    """Chuẩn hóa dữ liệu CRM để không còn None/null."""
+    normalized = {}
+    for k, v in data.items():
+        if v is None:
+            normalized[k] = ""   # thay None bằng chuỗi rỗng
+        else:
+            normalized[k] = v
+    return normalized
+
+
 def push_data_to_crm(data, crm_endpoint, token):
     """
     Push data to CRM via API.
@@ -56,18 +67,29 @@ def push_data_to_crm(data, crm_endpoint, token):
         token (str): Bearer token for authentication.
 
     Returns:
-        dict: Response from CRM API.
+        dict: Response from CRM API or error info.
 
     Raises:
         requests.HTTPError: If the request fails.
     """
     headers = {
         "Authorization": f"Bearer {token}",
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "Cookie": f"session_id={token}"
     }
-    response = session.post(crm_endpoint, headers=headers, data=data)
-    response.raise_for_status()
-    return response.json()
+    payload = normalize_payload(data)
+    try:
+        response = session.post(crm_endpoint, headers=headers, json=payload)
+        print(response.status_code, response.text)
+        response.raise_for_status()
+        return response.json()
+    except requests.HTTPError as e:
+        print(f"HTTPError: {e}")
+        print(f"Response: {getattr(e.response, 'text', None)}")
+        return {"error": str(e), "response": getattr(e.response, 'text', None)}
+    except Exception as ex:
+        print(f"Exception: {ex}")
+        return {"error": str(ex)}
 
 def convert_data_to_payload_format(df):
     """
@@ -84,5 +106,7 @@ def convert_data_to_payload_format(df):
     for row in df:
         record = {crm_field: row[crm_field] if crm_field in row.keys() else None for crm_field in CRM_API_DATA_FIELDS}
         crm_data.append(record)
-    print(crm_data)
     return crm_data
+
+if __name__ == "__main__":
+    push_data_to_crm(data={}, crm_endpoint="https://dev-dvkh.vetc.com.vn/api/partner_rsa", token="")

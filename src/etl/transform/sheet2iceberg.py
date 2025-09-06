@@ -50,5 +50,5 @@ class SheetToIcebergJob:
             key_columns=key_columns,
             partition_columns=partition_columns,
             sort_columns=sort_columns,
-            write_mode="append"
+            write_mode="overwrite"
         )

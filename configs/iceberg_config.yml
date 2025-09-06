@@ -2,14 +2,15 @@ iceberg:
   tables:
     - name: "add_lead"
       namespace: "ns_rsa"
-      warehouse: "development"
-      catalog_name: "development"
+      warehouse: "lnd_tdc"
+      catalog_name: "lnd_tdc"
       columns: ['stt', 'vehicle_owner_name', 'phone', 'address', 'license_plate', 'vehicle_brand', 'model_type', 'certificate_number', 'valid_from', 'valid_to', 'certificate_paper', 'product_package', 'rsa_type', 'processing_date']
       filters:
         processing_date: "2025-01-01"
-    # - name: "rsa_lead"
-    #   namespace: "ns_rsa"
-    #   warehouse: "lnd_tdc"
-    #   catalog_name: "lnd_tdc"
-    #   columns: ['stt', 'vehicle_owner_name', 'phone', 'address', 'license_plate', 'vehicle_brand', 'model_type', 'certificate_number', 'valid_from', 'valid_to', 'certificate_paper', 'product_package', 'processing_date']
-    #   processing_date: "2025-01-01"
+    - name: "rsa_lead"
+      namespace: "ns_rsa"
+      warehouse: "lnd_tdc"
+      catalog_name: "lnd_tdc"
+      columns: columns = ["so_number", "order_type", "vehicle_owner_name", "address", "phone", "id_number", "vehicle_brand", "license_plate", "chassis_number", "engine_number", "product_package", "product_fee", "total_amount", "agent_code", "agent_name", "insurance_provider_code", "insurance_provider_name", "sales_staff", "valid_from", "valid_to", "issue_date", "certificate_number", "rsa_type", "processing_date"]
+      filters:
+        processing_date: "2025-01-01"

@@ -44,4 +44,4 @@ class IcebergToCRMJob:
         self.load_iceberg_catalog()
         df = self.read_iceberg()
         self.push_to_crm(df)
-        logger.info("Push to CRM completed: %s", result)
+        logger.info("Push to CRM completed successfully.")
