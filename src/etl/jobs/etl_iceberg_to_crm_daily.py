@@ -19,8 +19,8 @@ def run_etl_iceberg_to_crm_daily():
                 crm_config=crm_config,
                 iceberg_config=iceberg_cfg
             )
-            # job.run()
-            # logger.info("ETL from Iceberg to CRM completed successfully.")
+            job.run()
+            logger.info("ETL from Iceberg to CRM completed successfully.")
     except Exception as e:
         logger.error("Error during ETL from Iceberg to CRM: %s", e)
         raise
