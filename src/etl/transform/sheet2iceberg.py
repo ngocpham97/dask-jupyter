@@ -1,6 +1,6 @@
 import pyarrow as pa
 import pandas as pd
-from utils.google.sheets import read_google_sheet
+from utils.google.sheets import read_google_sheet, normalize_date_columns
 from utils.iceberg.providers import write_table_to_iceberg, load_lakekeeper_catalog
 from utils.crm.api import get_crm_token, push_data_to_crm
 
@@ -17,17 +17,20 @@ class SheetToIcebergJob:
             index=self.sheet_config.get('index', 0),
             credentials_path=self.credentials_path
         )
-        df['processing_date'] = pd.to_datetime('today').normalize()
         df['rsa_type'] = 'add'
+        df['processing_date'] = pd.to_datetime('today').normalize()
         # Rename all columns in df with sheet_config['columns']
         columns = [col['name'] for col in self.sheet_config['columns']]
         if 'columns' in self.sheet_config:
             df.columns = columns
-        # Drop rows with too many missing values (e.g., more than half columns are NaN)
+        # Drop rows with too many missing values (including empty strings)
         threshold = len(df.columns) // 2
+        df = df.replace('', pd.NA)
         df = df.dropna(thresh=threshold)
+        df = normalize_date_columns(df, ['valid_from', 'valid_to'])
         # Convert all columns to string type
         df = df.astype(str)
+        df = df.reset_index(drop=True)
         # Write to Iceberg
         catalog = load_lakekeeper_catalog(
             catalog_name=self.sheet_config['iceberg_table']['catalog_name'],

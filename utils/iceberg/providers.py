@@ -107,9 +107,9 @@ def write_table_to_iceberg(
     # Case 1: Table already exists
     if catalog.table_exists(full_table_name):
         table = catalog.load_table(full_table_name)
-
+        print("Existing table schema:", table.schema)
         if write_mode in ("append", "upsert"):
-            actual_schema = {f.name: str(f.field_type) for f in table.schema.fields}
+            actual_schema = {f.name: str(f.field_type) for f in table.schema().fields}
             expected_schema = {c["name"]: str(c["data_type"]) for c in config_schema}
 
             schema_diffs = []
@@ -244,18 +244,19 @@ def read_table_from_iceberg(table_name, warehouse, namespace, columns=None, filt
     # Khởi tạo Lakekeeper catalog
     catalog = load_lakekeeper_catalog(catalog_name="rest", warehouse=warehouse)
     full_table_name = f"{namespace}.{table_name}"
-
     # Load bảng từ Iceberg
     table = catalog.load_table(full_table_name)
 
     # Áp dụng filters nếu có
-    if filters:
-        for column, value in filters.items():
-            table = table.filter(table[column] == value)
+    scan = table.scan()
+    # if filters:
+    #     for column, value in filters.items():
+    #         scan = scan.filter(f"{column} == '{value}'")
 
-    # Chọn các cột cần thiết
-    if columns:
-        table = table.select(columns)
+    # # Chọn các cột cần thiết
+    # print("Columns selected:", columns)
+    # if columns:
+    #     scan = scan.select(columns)
 
     # Trả về pyarrow.Table
-    return table.scan().to_arrow()
+    return scan.to_arrow()

@@ -5,7 +5,7 @@ iceberg:
       warehouse: "development"
       catalog_name: "development"
       columns: ['stt', 'vehicle_owner_name', 'phone', 'address', 'license_plate', 'vehicle_brand', 'model_type', 'certificate_number', 'valid_from', 'valid_to', 'certificate_paper', 'product_package', 'rsa_type', 'processing_date']
-      filter:
+      filters:
         processing_date: "2025-01-01"
     # - name: "rsa_lead"
     #   namespace: "ns_rsa"

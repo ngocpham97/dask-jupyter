@@ -12,7 +12,7 @@ def run_etl_iceberg_to_crm_daily():
     try:
         iceberg_config = parse_yaml_file_to_json('configs/iceberg_config.yml')
         for iceberg_cfg in iceberg_config['iceberg']['tables']:
-            iceberg_cfg['filter'] = {
+            iceberg_cfg['filters'] = {
                 "processing_date": date.today().isoformat()
             }
             job = IcebergToCRMJob(

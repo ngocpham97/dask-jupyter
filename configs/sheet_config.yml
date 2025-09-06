@@ -49,8 +49,8 @@ sheets:
         description: 'processing_date'
     iceberg_table: 
       name: "add_lead"
-      warehouse: "lnd_tdc"
-      catalog_name: "lnd_tdc"
+      warehouse: "development"
+      catalog_name: "development"
       namespace: "ns_rsa"
       primary_key: []
       partition_by: []
